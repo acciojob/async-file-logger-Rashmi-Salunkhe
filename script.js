@@ -1,4 +1,3 @@
-//your JS code here. If required.
 const fileNames = [
   "file1.txt",
   "file2.txt",
@@ -7,5 +6,24 @@ const fileNames = [
   "file5.txt",
 ];
 
-// do not change the code above
-// add your code here
+// Function to read a file and return a promise
+function readFile(fileName) {
+  return fetch(fileName)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Network response was not ok for ${fileName}`);
+      }
+      return response.text();
+    });
+}
+
+// Read all files and log their content
+Promise.all(fileNames.map(fileName => readFile(fileName)))
+  .then(contents => {
+    contents.forEach((content, index) => {
+      console.log(`Content from ${fileNames[index]}: ${content}`);
+    });
+  })
+  .catch(error => {
+    console.error('Error reading files:', error);
+  });
