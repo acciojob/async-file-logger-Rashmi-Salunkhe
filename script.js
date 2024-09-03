@@ -14,6 +14,10 @@ function readFile(fileName) {
         throw new Error(`Network response was not ok for ${fileName}`);
       }
       return response.text();
+    })
+    .catch(error => {
+      console.error(`Failed to fetch ${fileName}:`, error);
+      return ''; // Return an empty string in case of error
     });
 }
 
